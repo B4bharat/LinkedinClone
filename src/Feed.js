@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { collection, addDoc, onSnapshot,  orderBy, serverTimestamp } from "firebase/firestore";
+import FlipMove from "react-flip-move";
 import './Feed.css';
 
 import CreateIcon from '@mui/icons-material/Create';
@@ -73,15 +74,17 @@ function Feed() {
         </div>
       </div>
 
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
-        <Post
-          key={id}
-          name={name}
-          description={description}
-          message={message}
-          photoUrl={photoUrl}
-        />
-      ))}
+      <FlipMove>
+        {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+          <Post
+            key={id}
+            name={name}
+            description={description}
+            message={message}
+            photoUrl={photoUrl}
+          />
+        ))}
+      </FlipMove>
     </div>
   )
 }
