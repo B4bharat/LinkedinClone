@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 // import { auth } from './firebase';
 import { login } from './features/userSlice';
 
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import './Login.css';
 
@@ -19,6 +19,17 @@ const Login = () => {
 
   const loginToApp = (e) => {
     e.preventDefault();
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password).then(userAuth => {
+      dispatch(login({
+        email: userAuth.user.email,
+        uid: userAuth.user.uid,
+        displayName: userAuth.user.displayName,
+        photoUrl: userAuth.user.photoUrl,
+      }))
+    })
+    .catch(err => console.log(err));
   };
   const register = () => {
     if(!name) {

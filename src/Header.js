@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getAuth, signOut } from "firebase/auth";
 
 import SearchIcon from '@mui/icons-material/Search';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -10,11 +12,29 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import Avatar from './assets/avatar-library/avatar-3.jpg';
 
+import { logout } from './features/userSlice';
+
 import HeaderOption from './HeaderOption';
 
 import './Header.css';
 
 function Header() {
+
+  const dispatch = useDispatch();
+
+  const logoutOfApp = () => {
+    dispatch(logout());
+
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+      console.log('Sign-out successful');
+    }).catch((error) => {
+      // An error happened.
+      console.log('An error occurred while signing out');
+    });
+  }
+
   return (
     <div className="header">
       <div className="header__left">
@@ -31,7 +51,7 @@ function Header() {
         <HeaderOption Icon={BusinessCenterIcon} title="Jobs" />
         <HeaderOption Icon={ChatIcon} title="Messaging" />
         <HeaderOption Icon={NotificationsIcon} title="Notifications" />
-        <HeaderOption avatar={Avatar} title="me" />
+        <HeaderOption avatar={Avatar} title="me" onClick={logoutOfApp} />
       </div>
     </div>
   )
