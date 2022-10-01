@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { collection, addDoc, onSnapshot,  orderBy, serverTimestamp } from "firebase/firestore";
 import './Feed.css';
 
@@ -13,7 +14,11 @@ import Post from './Post';
 
 import { db } from './firebase';
 
+import { selectUser } from './features/userSlice';
+
 function Feed() {
+  const user = useSelector(selectUser);
+
   const [input, setInput] = useState('');
   const [posts, setPosts] = useState([]);
 
@@ -37,10 +42,10 @@ function Feed() {
 
     try {
       await addDoc(collection(db, 'posts'), {
-        name: 'Bharat Poptwani',
-        description: 'this is a test',
+        name: user.displayName,
+        description: user.email,
         message: input,
-        photoUrl: '',
+        photoUrl: user.photoUrl || '',
         timestamp: serverTimestamp()
       });
     } catch (e) {

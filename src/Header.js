@@ -10,16 +10,15 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import Avatar from './assets/avatar-library/avatar-3.jpg';
+// import Avatar from './assets/avatar-library/avatar-3.jpg';
 
-import { logout } from './features/userSlice';
+import { logout, selectUser } from './features/userSlice';
 
 import HeaderOption from './HeaderOption';
 
 import './Header.css';
 
 function Header() {
-
   const dispatch = useDispatch();
 
   const logoutOfApp = () => {
@@ -51,7 +50,7 @@ function Header() {
         <HeaderOption Icon={BusinessCenterIcon} title="Jobs" />
         <HeaderOption Icon={ChatIcon} title="Messaging" />
         <HeaderOption Icon={NotificationsIcon} title="Notifications" />
-        <HeaderOption avatar={Avatar} title="me" onClick={logoutOfApp} />
+        <HeaderOption avatar={true} title="me" onClick={logoutOfApp} />
       </div>
     </div>
   )
